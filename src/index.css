@@ -1,0 +1,8 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+body{@apply bg-cream text-ink font-sans}
+.btn{@apply inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium border border-line bg-white hover:bg-stone-50 transition disabled:opacity-40}
+.btn-p{@apply bg-burgundy text-white border-burgundy hover:bg-[#9a1a31]}
+.inp{@apply w-full rounded-lg border border-line bg-white px-3 py-2 text-sm outline-none focus:border-burgundy focus:ring-2 focus:ring-burgundy/10}
+.card{@apply relative overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_28px_rgba(41,37,36,0.06)] transition duration-200 hover:shadow-[0_16px_40px_rgba(41,37,36,0.10)] hover:-translate-y-0.5}
+.card-stripe{@apply absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-burgundy via-gold to-burgundy/40}
+@media print{aside,header,.no-print{display:none!important} .card{transform:none!important;box-shadow:none!important}}
