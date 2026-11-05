@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { Routes, Route, Navigate, NavLink, useNavigate, useParams } from 'react-router-dom'
-import { Bell, LogOut, Menu, Hotel } from 'lucide-react'
+import { Bell, LogOut, Menu, Hotel, X } from 'lucide-react'
 import { useStore } from './store'
 import { PAGES, NAV } from './pages'
 import { Role } from './config/hotel'
@@ -33,14 +33,14 @@ function Shell() {
   const items = NAV[user]; const Page = PAGES[user][page]
   if (!Page) return <Navigate to="/app/overview" />
   return <div className="min-h-screen flex">
-    <aside className={`fixed md:static z-40 inset-y-0 left-0 w-64 bg-white border-r border-line p-5 shadow-[8px_0_24px_rgba(41,37,36,0.03)] transition-transform ${open ? '' : '-translate-x-full'} md:translate-x-0`}>
+    <aside className={`fixed md:static z-50 inset-y-0 left-0 w-64 bg-white border-r border-line p-5 shadow-[8px_0_24px_rgba(41,37,36,0.03)] transition-transform ${open ? '' : '-translate-x-full'} md:translate-x-0`}>
       <h2 className="font-serif text-2xl text-burgundy">HotelOS</h2><p className="text-xs text-mute mb-6">The Meridian Hotel</p>
       <nav className="space-y-1">{items.map(([k, l]) => <NavLink key={k} to={`/app/${k}`} onClick={() => setOpen(false)} className={({ isActive }) => `block rounded-lg px-3 py-2 text-sm transition ${isActive ? 'bg-burgundy text-white' : 'hover:bg-cream'}`}>{l}</NavLink>)}</nav></aside>
     <div className="flex-1 min-w-0">
-      <header className="flex items-center justify-between px-6 py-3 bg-white border-b border-line">
+       <header className="relative z-30 flex items-center justify-between px-6 py-3 bg-white border-b border-line">
         <div className="flex items-center gap-3"><button className="md:hidden" onClick={() => setOpen(!open)}><Menu /></button><span className="text-sm text-mute">{new Date().toLocaleDateString('en-GB', { dateStyle: 'full' })}</span></div>
-        <div className="flex items-center gap-4 relative"><button onClick={() => { setBell(!bell); setRead(true) }} className="relative"><Bell size={20} />{!read && <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-burgundy" />}</button>
-          {bell && <div className="card hover:translate-y-0 absolute right-0 top-8 w-72 p-3 text-sm space-y-2 z-50"><div className="card-stripe" />{NOTES.map(n => <p key={n} className="rounded-lg bg-cream/80 px-2.5 py-2">{n}</p>)}</div>}
+        <div className="flex items-center gap-4 relative"><button type="button" onClick={() => { setBell(!bell); setRead(true) }} className="relative"><Bell size={20} />{!read && <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-burgundy" />}</button>
+           {bell && <div className="card hover:translate-y-0 absolute right-0 top-8 z-[60] w-72 max-w-[calc(100vw-2rem)] max-h-[calc(100vh-5rem)] overflow-y-auto bg-white p-3 text-sm space-y-2 origin-top-right"><div className="card-stripe" /><div className="flex items-center justify-between pb-1"><h3 className="font-serif text-base">Notifications</h3><button type="button" aria-label="Close notifications" className="rounded-lg p-1 hover:bg-cream" onClick={() => setBell(false)}><X size={16} /></button></div>{NOTES.map(n => <p key={n} className="rounded-lg bg-cream/80 px-2.5 py-2">{n}</p>)}</div>}
           <span className="text-sm capitalize hidden sm:block">{user}</span>
           <button className="btn" onClick={() => { logout(); nav('/login') }}><LogOut size={14} />Logout</button></div></header>
       <main className="p-6 max-w-7xl"><h1 className="font-serif text-3xl mb-6">{items.find(i => i[0] === page)?.[1]}</h1><Page /></main></div></div>
